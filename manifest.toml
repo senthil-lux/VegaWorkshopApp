@@ -29,35 +29,3 @@ id = "com.amazon.inputmethod.service"
 # UCC service for accessibility support
 [[wants.service]]
 id = "com.amazon.kepler.ucc.publisher"
-
-# Core media services
-[[wants.service]]
-id = "com.amazon.mediametrics.service"
-[[wants.service]]
-id = "com.amazon.media.server"
-[[wants.service]]
-id = "com.amazon.gipc.uuid.*"
-[[wants.service]]
-id = "com.amazon.media.playersession.service"
-
-# Media processing
-[[wants.service]]
-id = "com.amazon.mediabuffer.service"
-[[wants.service]]
-id = "com.amazon.mediatransform.service"
-
-# Audio services
-[[wants.service]]
-id = "com.amazon.audio.stream"
-[[wants.service]]
-id = "com.amazon.audio.control"
-[[wants.service]]
-id = "com.amazon.audio.system"
-
-# Accessibility (for captions)
-[[wants.privilege]]
-id = "com.amazon.devconf.privilege.accessibility"
-
-[offers]
-[[offers.service]]
-id = "com.amazon.gipc.uuid.*"
