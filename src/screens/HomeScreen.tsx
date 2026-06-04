@@ -105,6 +105,11 @@ export const HomeScreen = ({navigation}: HomeScreenProps) => {
   const [loading, setLoading] = useState(true);
   const [backgroundImage, setBackgroundImage] = useState<string>('');
 
+  // BUG: tracking the focus count at the screen level forces the ENTIRE
+  // HomeScreen (every ContentRow and ThumbnailItem) to re-render on every
+  // D-pad focus change, even though the rows and thumbnails have not changed.
+  const [focusCount, setFocusCount] = useState(0);
+
   useEffect(() => {
     fetchMovies();
   }, []);
@@ -133,8 +138,9 @@ export const HomeScreen = ({navigation}: HomeScreenProps) => {
   };
 
   const handleItemFocus = (item: MovieItem) => {
-    // setBackgroundImage(item.images.poster_16x9);
-    setBackgroundImage(item.images.thumbnail_450x253);    
+    setBackgroundImage(item.images.thumbnail_450x253);
+    // BUG: bumps screen-level state on every focus -> full-tree re-render.
+    setFocusCount((c) => c + 1);
   };
 
   // Group movies by category
@@ -181,6 +187,9 @@ export const HomeScreen = ({navigation}: HomeScreenProps) => {
 
       {/* Dark Overlay */}
       <View style={styles.overlay} />
+
+      {/* BUG: focus counter re-renders the whole screen on every focus move */}
+      <Text style={styles.focusCounter}>Focus changes: {focusCount}</Text>
 
       {/* Content */}
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
@@ -240,6 +249,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#1a1a1a',
+  },
+  focusCounter: {
+    position: 'absolute',
+    top: 20,
+    right: 40,
+    color: '#FFFFFF',
+    fontSize: 24,
   },
   rowContainer: {
     marginBottom: 40,
