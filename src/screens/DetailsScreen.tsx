@@ -56,7 +56,12 @@ export const DetailsScreen = ({route, navigation}: DetailsScreenProps) => {
   const {bannerImage, title, description, videoUrl} = route.params;
 
   const handlePlay = () => {
-    // Play button is currently a no-op — VideoPlayer screen has been removed.
+    console.log('Play button pressed for:', title);
+    console.log('Navigating to VideoPlayer with URL:', videoUrl);
+    navigation.navigate('VideoPlayer', {
+      videoUrl,
+      title,
+    });
   };
 
   const handleAddToWatchlist = () => {

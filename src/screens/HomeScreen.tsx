@@ -37,6 +37,114 @@ interface CatalogData {
   items: MovieItem[];
 }
 
+// Sample HLS (.m3u8) adaptive streams. These play via the Shaka Player
+// (MSE mode) wired up in VideoPlayerScreen. Thumbnails use a stable
+// placeholder image service so the row renders without bundled assets.
+const HLS_SAMPLES: MovieItem[] = [
+  {
+    id: 'hls-apple-bipbop',
+    title: 'Apple BipBop (HLS)',
+    description: 'Apple reference HLS stream with multiple bitrates.',
+    category: 'HLS Streams (Shaka)',
+    trending: false,
+    images: {
+      poster_16x9: 'https://picsum.photos/seed/hls-apple/1280/720',
+      thumbnail_450x253: 'https://picsum.photos/seed/hls-apple/450/253',
+    },
+    sources: [
+      {
+        type: 'application/x-mpegURL',
+        url: 'https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8',
+      },
+    ],
+  },
+  {
+    id: 'hls-mux-x36',
+    title: 'Mux Test Stream (HLS)',
+    description: 'Mux multi-rendition HLS test stream.',
+    category: 'HLS Streams (Shaka)',
+    trending: false,
+    images: {
+      poster_16x9: 'https://picsum.photos/seed/hls-mux/1280/720',
+      thumbnail_450x253: 'https://picsum.photos/seed/hls-mux/450/253',
+    },
+    sources: [
+      {
+        type: 'application/x-mpegURL',
+        url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+      },
+    ],
+  },
+  {
+    id: 'hls-tears-of-steel',
+    title: 'Tears of Steel (HLS)',
+    description: 'Blender open movie, adaptive HLS.',
+    category: 'HLS Streams (Shaka)',
+    trending: false,
+    images: {
+      poster_16x9: 'https://picsum.photos/seed/hls-tos/1280/720',
+      thumbnail_450x253: 'https://picsum.photos/seed/hls-tos/450/253',
+    },
+    sources: [
+      {
+        type: 'application/x-mpegURL',
+        url: 'https://test-streams.mux.dev/tos_ismc/main.m3u8',
+      },
+    ],
+  },
+  {
+    id: 'hls-big-buck-bunny',
+    title: 'Big Buck Bunny (HLS)',
+    description: 'Classic open movie, adaptive HLS.',
+    category: 'HLS Streams (Shaka)',
+    trending: false,
+    images: {
+      poster_16x9: 'https://picsum.photos/seed/hls-bbb/1280/720',
+      thumbnail_450x253: 'https://picsum.photos/seed/hls-bbb/450/253',
+    },
+    sources: [
+      {
+        type: 'application/x-mpegURL',
+        url: 'https://test-streams.mux.dev/test_001/stream.m3u8',
+      },
+    ],
+  },
+  {
+    id: 'hls-sintel',
+    title: 'Sintel (HLS)',
+    description: 'Blender open movie trailer, adaptive HLS.',
+    category: 'HLS Streams (Shaka)',
+    trending: false,
+    images: {
+      poster_16x9: 'https://picsum.photos/seed/hls-sintel/1280/720',
+      thumbnail_450x253: 'https://picsum.photos/seed/hls-sintel/450/253',
+    },
+    sources: [
+      {
+        type: 'application/x-mpegURL',
+        url: 'https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8',
+      },
+    ],
+  },
+  {
+    id: 'hls-art-of-motion',
+    title: 'Art of Motion (HLS)',
+    description: 'Bitmovin sample, adaptive HLS.',
+    category: 'HLS Streams (Shaka)',
+    trending: false,
+    images: {
+      poster_16x9: 'https://picsum.photos/seed/hls-aom/1280/720',
+      thumbnail_450x253: 'https://picsum.photos/seed/hls-aom/450/253',
+    },
+    sources: [
+      {
+        type: 'application/x-mpegURL',
+        url: 'https://bitmovin-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8',
+      },
+    ],
+  },
+];
+
 interface ThumbnailItemProps {
   item: MovieItem;
   onPress: () => void;
@@ -184,6 +292,14 @@ export const HomeScreen = ({navigation}: HomeScreenProps) => {
 
       {/* Content */}
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        {/* HLS Streams Row (adaptive playback via Shaka Player) */}
+        <ContentRow
+          title="HLS Streams (Shaka)"
+          items={HLS_SAMPLES}
+          onItemPress={handleItemPress}
+          onItemFocus={handleItemFocus}
+        />
+
         {/* Trending Now Row */}
         {trendingMovies.length > 0 && (
           <ContentRow

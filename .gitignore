@@ -5,7 +5,7 @@
 .vscode
 .tmp
 
-dist
+/dist
 build
 generated
 node_modules
